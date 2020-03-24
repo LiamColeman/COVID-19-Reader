@@ -39,4 +39,4 @@ while True:
     else:
         print(f'Unexpected Result {response.status_code}')
 
-    time.sleep(5*60);
+    time.sleep(5*60)
