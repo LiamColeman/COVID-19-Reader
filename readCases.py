@@ -38,7 +38,8 @@ while True:
             readStats(f"There are currently {positiveCases} known cases of covid19 in the US")
             previousPositiveCases = response[0]["positive"]
             log = open("log.txt", "a")
-            log.write(f"{positiveCases} as of {datetime.datetime.now()} \n")
+            log.write(f"{positiveCases} as of {datetime.datetime.now().__str__()} \n")
+            log.close()
         else:
             print("No change")
 
@@ -47,4 +48,4 @@ while True:
     else:
         print(f'Unexpected Result {response.status_code}')
 
-    time.sleep(5*60)
+    time.sleep(15*60)
