@@ -5,6 +5,7 @@ import tempfile
 import requests
 from gtts import gTTS
 import time
+import datetime
 from playsound import playsound
 
 previousPositiveCases = 0
@@ -20,8 +21,13 @@ def readStats(text):
     os.remove(f.name)
 
 
+headers = {
+    "Cache-Control": "no-cache",
+    "Pragma": "no-cache"
+}
+
 while True:
-    response = requests.get('https://covidtracking.com/api/us')
+    response = requests.get('https://covidtracking.com/api/us', headers=headers)
     if response.status_code == 200:
         print('Success!')
         print(response.text)
@@ -31,6 +37,8 @@ while True:
             print(positiveCases)
             readStats(f"There are currently {positiveCases} known cases of covid19 in the US")
             previousPositiveCases = response[0]["positive"]
+            log = open("log.txt", "a")
+            log.write(f"{positiveCases} as of {datetime.datetime.now()} \n")
         else:
             print("No change")
 
