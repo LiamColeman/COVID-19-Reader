@@ -12,6 +12,7 @@ previousPositiveCases = 0
 
 
 def readStats(text):
+    playsound('airhorn.mp3')
     tts = gTTS(text=text, lang='en')
     f = tempfile.NamedTemporaryFile(suffix='.mp3', delete=False)
     tts.write_to_fp(f)
