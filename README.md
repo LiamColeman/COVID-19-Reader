@@ -11,7 +11,7 @@ Current Features
 </li>
 </ul>
 
-Options Coming Soon
+Features Coming Soon
 <ul>
 <li>Adjustable request timing</li>
 </ul>
