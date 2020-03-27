@@ -1,5 +1,6 @@
 # Made by Liam Coleman
 # All data from https://covidtracking.com/
+import configparser
 import os
 import tempfile
 import requests
@@ -9,10 +10,25 @@ import datetime
 from playsound import playsound
 
 previousPositiveCases = 0
+options = configparser.ConfigParser()
 
+def doAirhorn():
+    try:
+        options.read('options.ini')
+        airhornStatus = options.get('options', 'airhorn')
+    except configparser.NoSectionError:
+        options['options'] = {'airhorn': 'off'}
+        with open('options.ini', 'w') as configfile:
+            options.write(configfile)
+        airhornStatus = "off"
+    if airhornStatus == "on":
+        playsound('airhorn.mp3')
+    else:
+        print("Airhorn is off")
 
 def readStats(text):
-    playsound('airhorn.mp3')
+    # playsound('airhorn.mp3')
+    doAirhorn()
     tts = gTTS(text=text, lang='en')
     f = tempfile.NamedTemporaryFile(suffix='.mp3', delete=False)
     tts.write_to_fp(f)

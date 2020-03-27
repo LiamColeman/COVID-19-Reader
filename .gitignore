@@ -2,3 +2,5 @@
 venv/
 writeDate.py
 log.txt
+config.py
+options.ini
