@@ -12,22 +12,27 @@ from playsound import playsound
 previousPositiveCases = 0
 options = configparser.ConfigParser()
 
-def doAirhorn():
+def getOptions():
     try:
+        global airhornStatus
+        global timerTime
         options.read('options.ini')
         airhornStatus = options.get('options', 'airhorn')
-    except configparser.NoSectionError:
-        options['options'] = {'airhorn': 'off'}
+        timerTime = options.get('options', 'time')
+    except (configparser.NoSectionError, configparser.NoOptionError) as e:
+        options['options'] = {'airhorn': 'off', 'time': 15}
         with open('options.ini', 'w') as configfile:
             options.write(configfile)
+        timerTime = 15
         airhornStatus = "off"
+
+def doAirhorn():
     if airhornStatus == "on":
         playsound('airhorn.mp3')
     else:
         print("Airhorn is off")
 
 def readStats(text):
-    # playsound('airhorn.mp3')
     doAirhorn()
     tts = gTTS(text=text, lang='en')
     f = tempfile.NamedTemporaryFile(suffix='.mp3', delete=False)
@@ -42,6 +47,8 @@ headers = {
     "Cache-Control": "no-cache",
     "Pragma": "no-cache"
 }
+
+getOptions()
 
 while True:
     response = requests.get('https://covidtracking.com/api/us', headers=headers)
@@ -65,4 +72,4 @@ while True:
     else:
         print(f'Unexpected Result {response.status_code}')
 
-    time.sleep(15*60)
+    time.sleep(float(timerTime)*60)
