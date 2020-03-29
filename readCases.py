@@ -9,6 +9,7 @@ import time
 import datetime
 from playsound import playsound
 
+
 previousPositiveCases = 0
 options = configparser.ConfigParser()
 
@@ -42,16 +43,9 @@ def readStats(text):
     # print(f.name)
     os.remove(f.name)
 
-
-headers = {
-    "Cache-Control": "no-cache",
-    "Pragma": "no-cache"
-}
-
-getOptions()
-
-while True:
+def getData():
     response = requests.get('https://covidtracking.com/api/us', headers=headers)
+    global previousPositiveCases
     if response.status_code == 200:
         print('Success!')
         print(response.text)
@@ -66,10 +60,16 @@ while True:
             log.close()
         else:
             print("No change")
-
-
-
     else:
         print(f'Unexpected Result {response.status_code}')
 
+headers = {
+    "Cache-Control": "no-cache",
+    "Pragma": "no-cache"
+}
+
+getOptions()
+
+while True:
+    getData()
     time.sleep(float(timerTime)*60)
