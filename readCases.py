@@ -44,7 +44,9 @@ def readStats(text):
     os.remove(f.name)
 
 def getData():
-    response = requests.get('https://covidtracking.com/api/us', headers=headers)
+    # response = requests.get('https://covidtracking.com/api/us', headers=headers)
+    response = requests.get('https://covidtracking.com/api/v1/us/current.json', headers=headers)
+
     global previousPositiveCases
     if response.status_code == 200:
         print('Success!')

@@ -4,3 +4,4 @@ writeDate.py
 log.txt
 config.py
 options.ini
+__pycache__/
