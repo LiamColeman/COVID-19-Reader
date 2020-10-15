@@ -59,7 +59,7 @@ def getData():
         if positiveCases != previousPositiveCases or deaths != previousDeaths:
             print(positiveCases)
             print(deaths)
-            readStats(f"There are currently {positiveCases} known cases and {deaths} deaths  of covid19 in the US")
+            readStats(f"There are currently {positiveCases} known cases and {deaths} deaths due to covid19 in the US")
             previousPositiveCases = response[0]["positive"]
             previousDeaths = response[0]["death"]
             log = open("log.txt", "a")
